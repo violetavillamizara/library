@@ -8,6 +8,12 @@ export const getAll= async()=>{
     let res= await(await fetch(`${uri}/autor`, config)).json();
 }
 
+export const getOne = async(id)=>{
+    config.method = "GET";
+    let res = await (await fetch(`${uri}/libro/${id}`, config)).json();
+    return res;
+}
+
 export const post= async(obj)=>{
     config.method="POST";
     config.body=JSON.stringify(obj);
