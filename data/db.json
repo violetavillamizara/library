@@ -1,10 +1,63 @@
 {
-  "categoria": [],
-  "editorial": [],
+  "categoria": [
+    {
+      "nombre":"Finanzas personales",
+      "id":1
+    },
+    {
+      "nombre":"Crecimiento Personal",
+      "id":2
+    },
+    {
+      "nombre":"Salud",
+      "id":3
+    },
+    {
+      "nombre":"Ventas",
+      "id":4
+    }
+  ],
+  "editorial": [
+    {
+      "nombre":"Norma",
+      "id":1
+    },
+    {
+      "nombre":"Planeta",
+      "id":2
+    },
+    {
+      "nombre":"Conecta",
+      "id":3
+    },
+    {
+      "nombre":"Oveja negra",
+      "id":4
+    }
+  ],
   "estado-libro": [],
-  "libro":[],
+  "libro":[
+    {
+      "titulo": "violeta",
+      "fecha": "2023-08-30",
+      "autorId": 1,
+      "categoriaId": 1,
+      "editorialId": 1,
+      "isbn": "380554",
+      "numPaginacion": 552,
+      "estadoId": 1,
+      "id": 1
+    }
+  ],
   "prestamo":[],
   "reserva":[],
-  "autor":[],
+  "autor":[
+    {
+      "nombre":"Bryan",
+      "apellido":"Tracy",
+      "nacionalidad":"EstadoUnidense",
+      "id":1
+    }
+  ],
   "usuario":[]
 }
