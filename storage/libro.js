@@ -5,7 +5,7 @@ import { getOne as getOneAutor  }  from "./autor.js";
 const uri=`${env.ssl+env.hostName}:${env.port}`;
 const config={method:undefined,headers:{"Content-Type":"application/json"}};
 
-const validarExtructura = (data={})=>{
+const validarEstructura = (data={})=>{
     if(data.constructor.name !== "Object" || Object.keys(data).length==0) return {status: 400, message: `Usuario envie los datos`};
     const {
         autorId=null, 
@@ -48,15 +48,22 @@ const validarDataBasic = (data={})=>{
 export const getAll= async()=>{
     config.method="GET";
     let res= await(await fetch(`${uri}/libro`, config)).json();
+    return res;
+}
+
+export const getOne = async(id)=>{
+    config.method = "GET";
+    let res = await (await fetch(`${uri}/libro/${id}`, config)).json();
+    return res;
 }
 
 export const post= async(obj)=>{
-    obj = validarExtructura(obj);
+    obj = validarEstructura(obj);
     if(obj.status) return obj;
     config.method="POST";
     config.body=JSON.stringify(obj);
     let res= await(await fetch(`${uri}/libro`, config)).json();
-    return res;
+    return (res.id)?{status:201, message:"El libro fue creado correctamente", id: res.id}:undefined;
 }
 
 export const deleteOne = async(id)=>{
@@ -68,9 +75,26 @@ export const deleteOne = async(id)=>{
 
 }
 
-export const putOne= async(obj)=>{
-    const {id}=obj;
-    if(Object.constructor.name !=='Object')return {status:400, message:"`El dato '${id}' no cumple`"};
+export const putOne= async(obj={})=>{
+    let all = undefined;
+    const {id, limit="1.0.0"} = obj;
+    if(typeof id !== 'number') return {status: 400, message: `El id '${id}' no cumple con el formato`};
+    if(limit == "1.0.0") {
+        obj = validarEstructura(obj);
+        if(obj.status) return obj;   
+    }
+    if(limit == "2.0.0") {
+        obj = validarDataBasic(obj);
+        if(obj.status) return obj;  
+        all = await getOne(id);
+    }
+    const {limit:lin, ...objUpdate} = obj;
+    obj = {...all, ...objUpdate};
+  
+    config.method = "PUT";
+    config.body = JSON.stringify(obj);
+    let res = await (await fetch(`${uri}/libro/${id}`, config)).json();
+    return res;
 }
 
 deletemany
